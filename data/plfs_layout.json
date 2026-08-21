@@ -1,0 +1,150 @@
+{
+  "survey_code": "PLFS_2024",
+  "survey_name": "Periodic Labour Force Survey (PLFS) - MoSPI/NSO Microdata",
+  "description": "Official PLFS household and individual microdata layout schema for employment, activity status, and demographic metrics.",
+  "columns": [
+    {
+      "name": "Survey_Round",
+      "start_byte": 1,
+      "end_byte": 8,
+      "data_type": "string",
+      "description": "Survey Round identifier (e.g., 2023-24, 2024-25)",
+      "is_tag": true,
+      "tag_type": "round"
+    },
+    {
+      "name": "FSU",
+      "start_byte": 9,
+      "end_byte": 16,
+      "data_type": "string",
+      "description": "First Stage Unit (Sample Village / Urban Block ID)",
+      "is_tag": true,
+      "tag_type": "fsu"
+    },
+    {
+      "name": "State",
+      "start_byte": 17,
+      "end_byte": 18,
+      "data_type": "string",
+      "description": "State / Union Territory Code (01-37)",
+      "is_tag": true,
+      "tag_type": "state"
+    },
+    {
+      "name": "District",
+      "start_byte": 19,
+      "end_byte": 21,
+      "data_type": "string",
+      "description": "District Code within State",
+      "is_tag": true,
+      "tag_type": "district"
+    },
+    {
+      "name": "Sector",
+      "start_byte": 22,
+      "end_byte": 22,
+      "data_type": "string",
+      "description": "Sector Code: 1 = Rural, 2 = Urban",
+      "is_tag": true,
+      "tag_type": "sector"
+    },
+    {
+      "name": "Sub_Sample",
+      "start_byte": 23,
+      "end_byte": 23,
+      "data_type": "integer",
+      "description": "Sub-sample number (1 or 2)"
+    },
+    {
+      "name": "Hh_No",
+      "start_byte": 24,
+      "end_byte": 26,
+      "data_type": "integer",
+      "description": "Sample Household Serial Number"
+    },
+    {
+      "name": "Person_No",
+      "start_byte": 27,
+      "end_byte": 28,
+      "data_type": "integer",
+      "description": "Person Serial Number within Household"
+    },
+    {
+      "name": "Rel_To_Head",
+      "start_byte": 29,
+      "end_byte": 29,
+      "data_type": "integer",
+      "description": "Relationship to Head of Household: 1=Self, 2=Spouse, 3=Child, 4=Parent, 9=Others"
+    },
+    {
+      "name": "Sex",
+      "start_byte": 30,
+      "end_byte": 30,
+      "data_type": "integer",
+      "description": "Gender: 1 = Male, 2 = Female, 3 = Transgender"
+    },
+    {
+      "name": "Age",
+      "start_byte": 31,
+      "end_byte": 33,
+      "data_type": "integer",
+      "description": "Age in completed years (0 - 110)"
+    },
+    {
+      "name": "General_Edu",
+      "start_byte": 34,
+      "end_byte": 35,
+      "data_type": "integer",
+      "description": "General Educational Level Code (01=Illiterate ... 13=Post Graduate)"
+    },
+    {
+      "name": "Usual_Principal_Activity_Status",
+      "start_byte": 36,
+      "end_byte": 37,
+      "data_type": "integer",
+      "description": "Usual Principal Activity Status Code (11=Self-Employed, 31=Regular Salaried, 41=Casual Worker, 81=Attending Edu, 91=Domestic)"
+    },
+    {
+      "name": "Subsidiary_Activity_Status",
+      "start_byte": 38,
+      "end_byte": 39,
+      "data_type": "integer",
+      "description": "Subsidiary Economic Activity Status Code"
+    },
+    {
+      "name": "Weekly_Activity_Status",
+      "start_byte": 40,
+      "end_byte": 41,
+      "data_type": "integer",
+      "description": "Current Weekly Activity Status Code"
+    },
+    {
+      "name": "Earnings_Last_Month",
+      "start_byte": 42,
+      "end_byte": 48,
+      "data_type": "float",
+      "description": "Earnings from usual principal activity during last calendar month (in INR)"
+    },
+    {
+      "name": "Daily_Wages",
+      "start_byte": 49,
+      "end_byte": 54,
+      "data_type": "float",
+      "description": "Average daily wage/salary received during the reference week (in INR)"
+    },
+    {
+      "name": "Monthly_Exp",
+      "start_byte": 55,
+      "end_byte": 61,
+      "data_type": "float",
+      "description": "Household Usual Monthly Consumer Expenditure MPCE (in INR)"
+    },
+    {
+      "name": "Multiplier",
+      "start_byte": 62,
+      "end_byte": 71,
+      "data_type": "float",
+      "description": "Sub-sample weight multiplier for population estimates"
+    }
+  ]
+}
