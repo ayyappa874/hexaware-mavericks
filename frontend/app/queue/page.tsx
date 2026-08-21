@@ -31,6 +31,41 @@ export default function InvestigationQueuePage() {
 
   const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8005";
 
+  const generateMockFlags = (): FlagRow[] => {
+    const detectors = ["RuleEngine", "StatisticalEngine", "MLEngine", "BenfordEngine"];
+    const severities = ["HIGH_PRIORITY", "REVIEW", "MONITOR"];
+    const bulletsList = [
+      ["RULE_MIN_AGE_SALARIED: Person age 11 reported as regular salaried worker.", "Earnings ₹85,000 exceed peer cohort mean by +3.8σ."],
+      ["Isolation Forest flagged high-dimensional multivariate outlier in Age vs Wages.", "Local Outlier Factor (LOF) score 2.41 density deviation."],
+      ["Benford's Law Chi-Square test failed (p < 0.001) for FSU_27005_102.", "FDR-corrected leading digit 0 over-represented by 48%."],
+      ["RULE_STUDENT_HIGH_EARNINGS: Inactive student status code reported ₹45,000 monthly income."],
+      ["Two-sample Z-Test detected significant Unemployment Rate shift (Z = +2.84, p < 0.01)."]
+    ];
+
+    return Array.from({ length: 15 }).map((_, i) => {
+      const score = 95 - i * 5;
+      const sev = score >= 75 ? "HIGH_PRIORITY" : score >= 50 ? "REVIEW" : "MONITOR";
+      return {
+        id: `FLAG_DEMO_${100 + i}`,
+        record_id: `f12b8e9f-ca7a-41b9-b778-88582324ecbf`,
+        survey_id: "PLFS_2024",
+        detector_type: detectors[i % detectors.length],
+        severity: sev,
+        score: score,
+        evidence: {
+          risk_score: score,
+          severity: sev,
+          narrative_bullets: bulletsList[i % bulletsList.length],
+          rule_score: Math.min(100, score + 5),
+          stat_score: Math.max(10, score - 10),
+          ml_score: score
+        },
+        status: "PENDING",
+        created_at: new Date().toISOString()
+      };
+    });
+  };
+
   const fetchQueue = async () => {
     setLoading(true);
     try {
@@ -42,12 +77,21 @@ export default function InvestigationQueuePage() {
         const data = await res.json();
         setFlags(data.flags || []);
         setSelectedIndex(0);
+        setLoading(false);
+        return;
       }
     } catch (err) {
-      console.error("Failed to load queue:", err);
-    } finally {
-      setLoading(false);
+      console.warn("Backend API unreachable on Vercel, using in-browser mock queue:", err);
     }
+
+    // Client-side mock flags fallback for Vercel demo
+    const mockData = generateMockFlags();
+    let filtered = mockData;
+    if (severityFilter) filtered = filtered.filter((f) => f.severity === severityFilter);
+    if (statusFilter) filtered = filtered.filter((f) => f.status === statusFilter);
+    setFlags(filtered);
+    setSelectedIndex(0);
+    setLoading(false);
   };
 
   const sortedFlags = [...flags].sort((a, b) => {

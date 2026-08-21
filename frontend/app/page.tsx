@@ -167,7 +167,7 @@ export default function Home() {
                 <div className="glass-card-interactive p-4 rounded-2xl border border-slate-800 space-y-1">
                   <span className="text-[11px] uppercase tracking-wider font-semibold text-slate-400">Total Microdata Records</span>
                   <div className="flex items-baseline justify-between">
-                    <span className="text-2xl font-black text-slate-100">{stats?.total_records || 1000}</span>
+                    <span className="text-2xl font-black text-slate-100">{stats?.total_records || 10000}</span>
                     <span className="text-[10px] font-mono text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">PLFS 2024</span>
                   </div>
                 </div>
@@ -175,7 +175,7 @@ export default function Home() {
                 <div className="glass-card-interactive p-4 rounded-2xl border border-rose-900/40 space-y-1">
                   <span className="text-[11px] uppercase tracking-wider font-semibold text-slate-400">High Priority Flags</span>
                   <div className="flex items-baseline justify-between">
-                    <span className="text-2xl font-black text-rose-400">{stats?.high_priority_count || 12}</span>
+                    <span className="text-2xl font-black text-rose-400">{stats?.high_priority_count || 908}</span>
                     <span className="text-[10px] font-mono text-rose-400 bg-rose-950/60 px-2 py-0.5 rounded border border-rose-800/40">Action Required</span>
                   </div>
                 </div>
