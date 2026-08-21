@@ -61,7 +61,7 @@ export default function AnomalyClustersPage() {
 
           {/* Clusters Grid */}
           {loading ? (
-            <SkeletonLoader variant="cards" count={3} />
+            <SkeletonLoader variant="card" count={3} />
           ) : clusters.length === 0 ? (
             <EmptyState
               title="No Anomaly Clusters"
