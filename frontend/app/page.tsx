@@ -11,6 +11,10 @@ import { ShieldCheck, Database, Layers, Activity, FileSpreadsheet, Users, Trendi
 interface StatsInfo {
   total_records: number;
   total_flags: number;
+  high_priority_count?: number;
+  mean_risk_score?: number;
+  canary_audit_rate?: number;
+  audit_chain_status?: string;
   rounds: Record<string, number>;
   state_counts: Record<string, number>;
 }
@@ -44,6 +48,8 @@ interface EnumeratorRow {
   total_records: number;
   missing_rate: number;
   digit_preference_score: number;
+  metrics_json?: Record<string, any>;
+  category_skew?: number;
   historical_anomaly_rate: number;
   composite_risk_score: number;
 }

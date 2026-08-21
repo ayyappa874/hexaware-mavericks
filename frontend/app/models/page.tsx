@@ -8,9 +8,9 @@ import { Sliders, Cpu, Award, CheckCircle2, Play, Activity } from "lucide-react"
 
 interface ModelItem {
   id: string;
-  model_name: str;
-  version: str;
-  algorithm: str;
+  model_name: string;
+  version: string;
+  algorithm: string;
   hyperparameters: Record<string, any>;
   metrics: {
     precision: number;
@@ -20,8 +20,8 @@ interface ModelItem {
     train_samples: number;
     test_samples: number;
   };
-  is_active: bool;
-  trained_at: str;
+  is_active: boolean;
+  trained_at: string;
 }
 
 export default function ModelLabPage() {

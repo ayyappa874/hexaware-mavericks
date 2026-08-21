@@ -62,7 +62,7 @@ export const TopNav: React.FC<TopNavProps> = ({
         {/* Round Selector */}
         <select
           value={selectedRound}
-          onChange={(e) => setSelectedRound(e.target.value)}
+          onChange={(e) => setSelectedRound?.(e.target.value)}
           className="bg-slate-900 border border-slate-800 text-slate-200 text-xs font-semibold rounded-xl px-3 py-1.5 outline-none focus:border-blue-500 transition-all cursor-pointer"
         >
           <option value="">All Rounds</option>
