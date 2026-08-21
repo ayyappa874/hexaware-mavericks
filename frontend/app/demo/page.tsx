@@ -29,6 +29,35 @@ export default function StreamReplayDemoPage() {
 
   const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8005";
 
+  const generateMockStreamItem = (index: number): StreamItem => {
+    const isAnomalous = Math.random() < 0.3;
+    const stateCode = ["07", "09", "19", "27", "29", "33"][Math.floor(Math.random() * 6)];
+    const riskScore = isAnomalous ? Math.floor(Math.random() * 40) + 55 : Math.floor(Math.random() * 25) + 5;
+    const severity = riskScore >= 75 ? "HIGH_PRIORITY" : riskScore >= 50 ? "REVIEW" : "NORMAL";
+    
+    return {
+      stream_index: index,
+      record_id: `REC_PLFS_2024_${stateCode}_${Math.floor(Math.random() * 900000 + 100000)}`,
+      state_code: stateCode,
+      fsu_id: `FSU_${stateCode}005_${Math.floor(Math.random() * 800 + 100)}`,
+      raw_payload: {
+        Age: isAnomalous ? Math.floor(Math.random() * 10) + 5 : Math.floor(Math.random() * 50) + 18,
+        Earnings_Last_Month: isAnomalous ? 85000 : Math.floor(Math.random() * 30000) + 5000,
+        Usual_Principal_Activity_Status: isAnomalous ? 31 : 11,
+        Sector: Math.random() > 0.5 ? 1 : 2
+      },
+      validation_result: {
+        overall_risk: riskScore,
+        severity: severity,
+        evidence: {
+          narrative_bullets: isAnomalous 
+            ? ["RULE_MIN_AGE_SALARIED: Person under 15 reported as regular salaried worker.", "Earnings ₹85,000 exceed peer cohort mean by +3.8σ."]
+            : ["All 10 PLFS syntactic rules passed.", "Peer cohort statistical distributions normal."]
+        }
+      }
+    };
+  };
+
   const fetchNextRecord = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/v1/demo/stream-next`);
@@ -38,10 +67,18 @@ export default function StreamReplayDemoPage() {
         setCurrentRisk(item.validation_result.overall_risk);
         setCurrentSeverity(item.validation_result.severity);
         setTotalProcessed((prev) => prev + 1);
+        return;
       }
     } catch (err) {
-      console.error("Stream fetch error:", err);
+      console.warn("Backend API unreachable on Vercel, using in-browser stream generator:", err);
     }
+
+    // Client-side fallback stream item
+    const fallbackItem = generateMockStreamItem(totalProcessed + 1);
+    setItems((prev) => [fallbackItem, ...prev.slice(0, 19)]);
+    setCurrentRisk(fallbackItem.validation_result.overall_risk);
+    setCurrentSeverity(fallbackItem.validation_result.severity);
+    setTotalProcessed((prev) => prev + 1);
   };
 
   useEffect(() => {
